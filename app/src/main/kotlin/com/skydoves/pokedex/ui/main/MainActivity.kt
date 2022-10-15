@@ -24,6 +24,7 @@ import com.skydoves.pokedex.R
 import com.skydoves.pokedex.databinding.ActivityMainBinding
 import com.skydoves.transformationlayout.onTransformationStartContainer
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
@@ -38,5 +39,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
       adapter = PokemonAdapter()
       vm = viewModel
     }
+    Timber.tag(TAG).i("onCreate: ")
+  }
+
+  companion object {
+    private const val TAG = "MainActivity"
   }
 }
