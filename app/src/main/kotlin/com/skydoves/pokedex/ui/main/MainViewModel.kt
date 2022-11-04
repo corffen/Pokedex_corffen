@@ -27,6 +27,7 @@ import com.skydoves.pokedex.core.model.Pokemon
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -56,8 +57,26 @@ class MainViewModel @Inject constructor(
   @get:Bindable
   val pokemonList: List<Pokemon> by pokemonListFlow.asBindingProperty(viewModelScope, emptyList())
 
+  private val bugFlow = MutableStateFlow("")
+
+  @get:Bindable
+  val bugData: String by bugFlow.asBindingProperty()
+
   init {
     Timber.d("init MainViewModel")
+    fetchBugData()
+  }
+
+  fun fetchBugData() {
+    viewModelScope.launch {
+      mainRepository.fetchBugData(
+        onStart = {},
+        onComplete = {},
+        onError = {}
+      ).collect {
+        bugFlow.emit(it)
+      }
+    }
   }
 
   @MainThread

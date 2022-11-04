@@ -29,6 +29,7 @@ android {
     minSdk = Configuration.minSdk
     targetSdk = Configuration.targetSdk
   }
+    namespace = "com.skydoves.core.data"
 }
 
 dependencies {

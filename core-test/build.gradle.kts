@@ -28,6 +28,7 @@ android {
     minSdk = Configuration.minSdk
     targetSdk = Configuration.targetSdk
   }
+    namespace = "com.skydoves.pokedex.core.test"
 }
 
 dependencies {

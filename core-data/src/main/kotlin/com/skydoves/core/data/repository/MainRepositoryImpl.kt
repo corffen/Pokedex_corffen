@@ -67,4 +67,15 @@ class MainRepositoryImpl @Inject constructor(
       emit(pokemonDao.getAllPokemonList(page).asDomain())
     }
   }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
+  override fun fetchBugData(
+    onStart: () -> Unit,
+    onComplete: () -> Unit,
+    onError: (String?) -> Unit
+  ) = flow {
+    kotlinx.coroutines.delay(1000)
+    val msg = (1..100).random().toString()
+    emit(msg)
+  }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
 }

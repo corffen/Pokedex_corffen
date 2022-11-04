@@ -17,6 +17,7 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
   alias(libs.plugins.spotless)
+//  id("com.osacky.doctor") version "0.8.1"
 }
 
 buildscript {
@@ -35,12 +36,11 @@ buildscript {
 
 subprojects {
   apply(plugin = rootProject.libs.plugins.spotless.get().pluginId)
-
   tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
     kotlinOptions.freeCompilerArgs += listOf(
-      "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-      "-Xopt-in=kotlin.time.ExperimentalTime",
+      "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+      "-opt-in=kotlin.time.ExperimentalTime",
     )
   }
 

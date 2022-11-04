@@ -69,6 +69,7 @@ android {
       matchingFallbacks += listOf("release")
     }
   }
+    namespace = "com.skydoves.pokedex"
 }
 
 dependencies {

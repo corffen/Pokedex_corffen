@@ -16,7 +16,6 @@
 
 package com.skydoves.pokedex.core.network.di
 
-import com.skydoves.pokedex.core.network.interceptor.HttpRequestInterceptor
 import com.skydoves.pokedex.core.network.service.PokedexClient
 import com.skydoves.pokedex.core.network.service.PokedexService
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
@@ -25,8 +24,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
@@ -36,8 +37,12 @@ object NetworkModule {
   @Provides
   @Singleton
   fun provideOkHttpClient(): OkHttpClient {
+    val logging = HttpLoggingInterceptor {
+      Timber.tag("PokeCore").d(it)
+    }
+    logging.setLevel(HttpLoggingInterceptor.Level.BODY)
     return OkHttpClient.Builder()
-      .addInterceptor(HttpRequestInterceptor())
+      .addInterceptor(logging)
       .build()
   }
 

@@ -40,6 +40,7 @@ android {
   sourceSets.getByName("test") {
     assets.srcDir(files("$projectDir/schemas"))
   }
+    namespace = "com.skydoves.pokedex.core.database"
 }
 
 dependencies {

@@ -51,7 +51,8 @@ android {
   }
 
   targetProjectPath = ":app"
-  experimentalProperties["android.experimental.self-instrumenting"] = true
+    namespace = "com.github.skydoves.benchmark"
+    experimentalProperties["android.experimental.self-instrumenting"] = true
 }
 
 dependencies {

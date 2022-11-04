@@ -29,4 +29,11 @@ interface MainRepository {
     onComplete: () -> Unit,
     onError: (String?) -> Unit
   ): Flow<List<Pokemon>>
+
+  @WorkerThread
+  fun fetchBugData(
+    onStart: () -> Unit,
+    onComplete: () -> Unit,
+    onError: (String?) -> Unit
+  ): Flow<String>
 }

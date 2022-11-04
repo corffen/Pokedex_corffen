@@ -20,6 +20,9 @@ pluginManagement {
     mavenCentral()
     gradlePluginPortal()
     maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
+    maven {
+      url = uri("https://plugins.gradle.org/m2/")
+    }
   }
 }
 dependencyResolutionManagement {
