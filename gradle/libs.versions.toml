@@ -1,5 +1,5 @@
 [versions]
-agp = "7.3.0"
+agp = "7.3.1"
 kotlin = "1.7.20"
 ksp = "1.7.20-1.0.6"
 javaRelease = "8"
@@ -21,6 +21,7 @@ coroutines = "1.6.4"
 whatIf = "1.1.1"
 glide = "4.13.2"
 glidePalette = "2.1.2"
+gson = "2.10"
 bundler = "1.0.4"
 transformationLayout = "1.1.1"
 recyclerView = "1.2.1"
@@ -87,6 +88,7 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 whatif = { module = "com.github.skydoves:whatif", version.ref = "whatIf" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-palette = { module = "com.github.florent37:glidepalette", version.ref = "glidePalette" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 bundler = { module = "com.github.skydoves:bundler", version.ref = "bundler" }
 transformationLayout = { module = "com.github.skydoves:transformationlayout", version.ref = "transformationLayout" }
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerView" }

@@ -81,19 +81,6 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-      android:id="@+id/tv_bug"
-      android:layout_width="100dp"
-      android:layout_height="40dp"
-      android:gravity="center"
-      android:background="@color/black"
-      android:onClick="@{()->vm.fetchBugData()}"
-      android:text="@{vm.bugData}"
-      android:textColor="@color/bug"
-      android:textSize="16sp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
-
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

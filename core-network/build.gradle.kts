@@ -47,6 +47,7 @@ dependencies {
   implementation(libs.retrofit)
   implementation(libs.retrofit.moshi)
   implementation(libs.okhttp.interceptor)
+  implementation(libs.gson)
   testImplementation(libs.okhttp.mockserver)
   testImplementation(libs.androidx.arch.core)
 
