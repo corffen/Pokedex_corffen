@@ -77,6 +77,7 @@ dependencies {
   implementation(project(":core-data"))
   implementation(project(":common-base"))
   implementation(project(":core-network"))
+  implementation(project(":core-database"))
 
   // modules for unit test
   testImplementation(project(":core-network"))

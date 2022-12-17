@@ -1,11 +1,12 @@
 package com.skydoves.pokedex.ui.flow
 
-import androidx.databinding.Bindable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.skydoves.bindables.BindingViewModel
-import com.skydoves.bindables.bindingProperty
+import com.skydoves.pokedex.core.database.entitiy.User
+import com.skydoves.pokedex.core.database.entitiy.mapper.asDomain
+import com.skydoves.pokedex.core.database.local.DatabaseHelperImpl
 import com.skydoves.pokedex.core.model.ApiUser
 import com.skydoves.pokedex.core.model.Resource
 import com.skydoves.pokedex.core.network.AppDispatchers
@@ -15,34 +16,38 @@ import com.skydoves.pokedex.navigator.Screens
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class FlowViewModel @AssistedInject constructor(
   private val apiHelper: ApiHelperImpl,
+  private val dbHelper: DatabaseHelperImpl,
   @Assisted private val type: String,
   @Dispatcher(AppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
 ) : BindingViewModel() {
-
-  @get:Bindable
-  var isLoading: Boolean by bindingProperty(true)
-    private set
 
   private val _users = MutableStateFlow<Resource<List<ApiUser>>>(Resource.loading())
 
   val users: StateFlow<Resource<List<ApiUser>>> = _users
 
   init {
-    if (type == Screens.FLOWS_SINGLE_NETWORK.name) {
-      fetchUsersWithSingleNetwork()
-    } else if (type == Screens.FLOWS_SERIES_NETWORK.name) {
-      fetchUsersWithSeriesNetwork()
+    when (type) {
+      Screens.FLOWS_SINGLE_NETWORK.name -> {
+        fetchUsersWithSingleNetwork()
+      }
+      Screens.FLOWS_SERIES_NETWORK.name -> {
+        fetchUsersWithSeriesNetwork()
+      }
+      Screens.FLOWS_PARALLEL_NETWORK.name -> {
+        fetchUsersWithParallel()
+      }
+      Screens.FLOWS_DB.name -> {
+        fetchUsersWithDb()
+      }
     }
   }
 
-  fun updateLoading(loading: Boolean) {
-    isLoading = loading
-  }
 
   private fun fetchUsersWithSingleNetwork() {
     viewModelScope.launch {
@@ -54,13 +59,12 @@ class FlowViewModel @AssistedInject constructor(
         }
         .collect {
           _users.value = Resource.success(it)
-          isLoading = false
         }
     }
   }
 
 
-  fun fetchUsersWithSeriesNetwork() {
+  private fun fetchUsersWithSeriesNetwork() {
     viewModelScope.launch {
       _users.value = Resource.loading()
       val allUsersFromApi = mutableListOf<ApiUser>()
@@ -76,6 +80,72 @@ class FlowViewModel @AssistedInject constructor(
         .collect { moreUsersFromApi ->
           allUsersFromApi.addAll(moreUsersFromApi)
           _users.value = Resource.success(allUsersFromApi)
+        }
+    }
+  }
+
+  private fun fetchUsersWithParallel() {
+    viewModelScope.launch {
+      _users.value = Resource.loading()
+      apiHelper.getUsers()
+        .zip(apiHelper.getMoreUsers()) { usersFromApi, moreUsersFromApi ->
+          val allUsersFromApi = mutableListOf<ApiUser>()
+          allUsersFromApi.addAll(usersFromApi)
+          allUsersFromApi.addAll(moreUsersFromApi)
+          return@zip allUsersFromApi
+        }
+        .flowOn(Dispatchers.IO)
+        .catch { e ->
+          _users.value = Resource.error(e.toString())
+        }
+        .collect {
+          _users.value = Resource.success(it)
+        }
+    }
+  }
+
+  private fun fetchUsersWithDb() {
+    viewModelScope.launch {
+      _users.value = Resource.loading()
+      dbHelper.getUsers()
+        .flatMapConcat { usersFromDb ->
+          if (usersFromDb.isEmpty()) {
+            return@flatMapConcat apiHelper.getUsers()
+              .map { apiUserList ->
+                val userList = mutableListOf<User>()
+                for (apiUser in apiUserList) {
+                  val user = User(
+                    apiUser.id,
+                    apiUser.name,
+                    apiUser.email,
+                    apiUser.avatar
+                  )
+                  userList.add(user)
+                }
+                userList
+              }
+              .flatMapConcat { usersToInsertInDB ->
+                dbHelper.insertAll(usersToInsertInDB)
+                  .flatMapConcat {
+                    flow {
+                      emit(usersToInsertInDB)
+                    }
+                  }
+              }
+          } else {
+            return@flatMapConcat flow {
+              emit(usersFromDb)
+            }
+          }
+        }
+        .flowOn(Dispatchers.IO)
+        .catch { e ->
+          _users.value = Resource.error(e.toString())
+        }
+        .collect {
+          _users.value = Resource.success(it.map { user ->
+            user.asDomain()
+          })
         }
     }
   }
