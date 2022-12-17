@@ -17,7 +17,15 @@
 package com.skydoves.pokedex
 
 import android.app.Application
+import com.gordon.common.base.utilcode.util.CrashUtils
+import com.gordon.common.base.utilcode.util.Utils
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class PokedexApp : Application()
+class PokedexApp : Application() {
+
+  override fun onCreate() {
+    super.onCreate()
+    Utils.init(this)
+  }
+}

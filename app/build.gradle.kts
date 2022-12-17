@@ -75,6 +75,7 @@ android {
 dependencies {
   // modules
   implementation(project(":core-data"))
+  implementation(project(":common-base"))
 
   // modules for unit test
   testImplementation(project(":core-network"))
@@ -116,6 +117,7 @@ dependencies {
   // recyclerView
   implementation(libs.recyclerview)
   implementation(libs.baseAdapter)
+  implementation(libs.brvah)
 
   // custom views
   implementation(libs.rainbow)

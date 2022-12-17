@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":common-base")
+
+
 //Designed and developed by 2022 skydoves (Jaewoong Eum)
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,6 +35,7 @@ dependencyResolutionManagement {
     mavenCentral()
     gradlePluginPortal()
     maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
+    maven(url="https://jitpack.io")
   }
 }
 rootProject.name = "Pokedex"

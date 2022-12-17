@@ -26,6 +26,7 @@ bundler = "1.0.4"
 transformationLayout = "1.1.1"
 recyclerView = "1.2.1"
 baseAdapter = "1.0.4"
+brvah = "3.0.10"
 androidRibbon = "1.0.4"
 progressView = "1.1.3"
 rainbow = "1.0.3"
@@ -93,6 +94,7 @@ bundler = { module = "com.github.skydoves:bundler", version.ref = "bundler" }
 transformationLayout = { module = "com.github.skydoves:transformationlayout", version.ref = "transformationLayout" }
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerView" }
 baseAdapter = { module = "com.github.skydoves:baserecyclerviewadapter", version.ref = "baseAdapter" }
+brvah = { module = "com.github.CymChad:BaseRecyclerViewAdapterHelper", version.ref = "brvah" }
 rainbow = { module = "com.github.skydoves:rainbow", version.ref = "rainbow" }
 androidRibbon = { module = "com.github.skydoves:androidribbon", version.ref = "androidRibbon" }
 progressView = { module = "com.github.skydoves:progressview", version.ref = "progressView" }
