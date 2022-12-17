@@ -22,7 +22,7 @@ import com.skydoves.pokedex.core.database.entitiy.mapper.asDomain
 import com.skydoves.pokedex.core.database.entitiy.mapper.asEntity
 import com.skydoves.pokedex.core.model.Pokemon
 import com.skydoves.pokedex.core.network.Dispatcher
-import com.skydoves.pokedex.core.network.PokedexAppDispatchers
+import com.skydoves.pokedex.core.network.AppDispatchers
 import com.skydoves.pokedex.core.network.service.PokedexClient
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.message
@@ -38,7 +38,7 @@ import javax.inject.Inject
 class MainRepositoryImpl @Inject constructor(
   private val pokedexClient: PokedexClient,
   private val pokemonDao: PokemonDao,
-  @Dispatcher(PokedexAppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
+  @Dispatcher(AppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
 ) : MainRepository {
 
   @WorkerThread

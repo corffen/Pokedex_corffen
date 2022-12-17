@@ -8,17 +8,21 @@ import com.skydoves.bindables.BindingViewModel
 import com.skydoves.bindables.bindingProperty
 import com.skydoves.pokedex.core.model.ApiUser
 import com.skydoves.pokedex.core.model.Resource
+import com.skydoves.pokedex.core.network.AppDispatchers
+import com.skydoves.pokedex.core.network.Dispatcher
 import com.skydoves.pokedex.core.network.api.ApiHelperImpl
 import com.skydoves.pokedex.navigator.Screens
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class FlowViewModel @AssistedInject constructor(
   private val apiHelper: ApiHelperImpl,
-  @Assisted private val type: String) : BindingViewModel() {
+  @Assisted private val type: String,
+  @Dispatcher(AppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
+) : BindingViewModel() {
 
   @get:Bindable
   var isLoading: Boolean by bindingProperty(true)
@@ -36,16 +40,21 @@ class FlowViewModel @AssistedInject constructor(
     }
   }
 
+  fun updateLoading(loading: Boolean) {
+    isLoading = loading
+  }
+
   private fun fetchUsersWithSingleNetwork() {
     viewModelScope.launch {
       _users.value = Resource.loading()
       apiHelper.getUsers()
-        .flowOn(Dispatchers.IO)
+        .flowOn(ioDispatcher)
         .catch { e ->
           _users.value = Resource.error(e.toString())
-        }.simpleLife()
+        }
         .collect {
           _users.value = Resource.success(it)
+          isLoading = false
         }
     }
   }
@@ -60,8 +69,7 @@ class FlowViewModel @AssistedInject constructor(
           allUsersFromApi.addAll(usersFromApi)
           apiHelper.getMoreUsers()
         }
-        .flowOn(Dispatchers.IO)
-        .simpleLife()
+        .flowOn(ioDispatcher)
         .catch { e ->
           _users.value = Resource.error(e.toString())
         }
@@ -69,14 +77,6 @@ class FlowViewModel @AssistedInject constructor(
           allUsersFromApi.addAll(moreUsersFromApi)
           _users.value = Resource.success(allUsersFromApi)
         }
-    }
-  }
-
-  private fun <T> Flow<T>.simpleLife(): Flow<T> {
-    return this.onStart {
-      isLoading = true
-    }.onCompletion {
-      isLoading = false
     }
   }
 

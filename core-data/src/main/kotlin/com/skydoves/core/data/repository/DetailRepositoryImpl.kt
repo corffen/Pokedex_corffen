@@ -22,7 +22,7 @@ import com.skydoves.pokedex.core.database.entitiy.mapper.asDomain
 import com.skydoves.pokedex.core.database.entitiy.mapper.asEntity
 import com.skydoves.pokedex.core.model.PokemonInfo
 import com.skydoves.pokedex.core.network.Dispatcher
-import com.skydoves.pokedex.core.network.PokedexAppDispatchers
+import com.skydoves.pokedex.core.network.AppDispatchers
 import com.skydoves.pokedex.core.network.model.PokemonErrorResponse
 import com.skydoves.pokedex.core.network.model.mapper.ErrorResponseMapper
 import com.skydoves.pokedex.core.network.service.PokedexClient
@@ -40,7 +40,7 @@ import javax.inject.Inject
 class DetailRepositoryImpl @Inject constructor(
   private val pokedexClient: PokedexClient,
   private val pokemonInfoDao: PokemonInfoDao,
-  @Dispatcher(PokedexAppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
+  @Dispatcher(AppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
 ) : DetailRepository {
 
   @WorkerThread

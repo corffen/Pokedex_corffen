@@ -17,7 +17,7 @@
 package com.skydoves.pokedex.core.network.di
 
 import com.skydoves.pokedex.core.network.Dispatcher
-import com.skydoves.pokedex.core.network.PokedexAppDispatchers
+import com.skydoves.pokedex.core.network.AppDispatchers
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,6 +30,6 @@ import kotlinx.coroutines.Dispatchers
 object DispatchersModule {
 
   @Provides
-  @Dispatcher(PokedexAppDispatchers.IO)
+  @Dispatcher(AppDispatchers.IO)
   fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 }

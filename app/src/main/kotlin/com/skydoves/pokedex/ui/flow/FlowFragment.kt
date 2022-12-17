@@ -18,7 +18,6 @@ import com.skydoves.pokedex.core.model.Status
 import com.skydoves.pokedex.databinding.FragmentFlowBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -59,15 +58,16 @@ class FlowFragment : BindingFragment<FragmentFlowBinding>(R.layout.fragment_flow
         viewModel.users.collect {
           when (it.status) {
             Status.SUCCESS -> {
-              Timber.tag(TAG).i("success:${it.data}")
+              binding.recyclerView.isVisible = true
               adapter.setList(it.data)
+              binding.progressBar.isVisible = false
             }
             Status.LOADING -> {
-              Timber.tag(TAG).i("LOADING:")
+              binding.progressBar.isVisible = true
             }
             Status.ERROR -> {
               //Handle Error
-              Timber.tag(TAG).i("ERROR:${it.message}")
+              binding.progressBar.isVisible = false
             }
           }
         }
