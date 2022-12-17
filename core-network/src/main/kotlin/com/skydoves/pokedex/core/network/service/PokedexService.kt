@@ -33,4 +33,6 @@ interface PokedexService {
 
   @GET("pokemon/{name}")
   suspend fun fetchPokemonInfo(@Path("name") name: String): ApiResponse<PokemonInfo>
+
+
 }

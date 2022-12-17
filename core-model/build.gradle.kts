@@ -36,8 +36,10 @@ android {
 dependencies {
   // json parsing
   implementation(libs.moshi)
+  implementation(libs.gson)
   ksp(libs.moshi.codegen)
-
+// coroutines
+  implementation(libs.coroutines)
   // logger
   api(libs.timber)
 }

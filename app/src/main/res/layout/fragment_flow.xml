@@ -4,17 +4,26 @@
 
   <data>
 
+    <variable
+      name="vm"
+      type="com.skydoves.pokedex.ui.flow.FlowViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-      android:id="@+id/tv_flow"
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="gone" />
+
+    <ProgressBar
+      android:id="@+id/progressBar"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="flow"
+      app:gone="@{vm.loading}"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

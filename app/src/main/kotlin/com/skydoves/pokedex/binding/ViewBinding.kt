@@ -21,6 +21,7 @@ import android.graphics.Typeface
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.appcompat.app.AppCompatActivity
@@ -173,5 +174,13 @@ object ViewBinding {
     if (value != null) {
       progressView.max = value.toFloat()
     }
+  }
+
+  @JvmStatic
+  @BindingAdapter("glideImg")
+  fun bindLoadNetImage(view: ImageView, url: String) {
+    Glide.with(view.context)
+      .load(url)
+      .into(view)
   }
 }

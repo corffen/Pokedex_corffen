@@ -1,7 +1,10 @@
 package com.skydoves.pokedex.navigator
 enum class Screens {
   BUTTONS,
-  Flows,
+  FLOWS_SINGLE_NETWORK,
+  FLOWS_SERIES_NETWORK,
+  FLOWS_PARALLEL_NETWORK,
+  FLOWS_CALLBACK,
   Main
 }
 interface AppNavigator {

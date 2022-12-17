@@ -16,6 +16,8 @@
 
 package com.skydoves.pokedex.core.network.di
 
+import com.skydoves.pokedex.core.network.api.ApiService
+import com.skydoves.pokedex.core.network.api.Constants
 import com.skydoves.pokedex.core.network.service.PokedexClient
 import com.skydoves.pokedex.core.network.service.PokedexService
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
@@ -47,6 +49,7 @@ object NetworkModule {
       .build()
   }
 
+  @PokeRetrofit
   @Provides
   @Singleton
   fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
@@ -59,10 +62,27 @@ object NetworkModule {
       .build()
   }
 
+  @ApiRetrofit
   @Provides
   @Singleton
-  fun providePokedexService(retrofit: Retrofit): PokedexService {
+  fun provideApiRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    return Retrofit.Builder()
+      .client(okHttpClient)
+      .baseUrl(Constants.API_BASE_URL)
+      .addConverterFactory(GsonConverterFactory.create())
+      .build()
+  }
+
+  @Provides
+  @Singleton
+  fun providePokedexService(@PokeRetrofit retrofit: Retrofit): PokedexService {
     return retrofit.create(PokedexService::class.java)
+  }
+
+  @Provides
+  @Singleton
+  fun provideApiService(@ApiRetrofit retrofit: Retrofit): ApiService {
+    return retrofit.create(ApiService::class.java)
   }
 
   @Provides

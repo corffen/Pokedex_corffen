@@ -40,7 +40,7 @@ class ButtonFragment : BindingFragment<FragmentButtonBinding>(R.layout.fragment_
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    adapter.setList(Screens.values().toList())
+    adapter.setList(Screens.values().filter { it != Screens.BUTTONS })
   }
 
   companion object {

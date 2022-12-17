@@ -15,7 +15,7 @@ class AppNavigatorImpl @Inject constructor(private val activity: FragmentActivit
       Screens.BUTTONS -> replaceFragment(activity, ButtonFragment.newInstance())
       Screens.Main -> ActivityUtils.startActivity(MainActivity::class.java)
       else -> {
-        replaceFragment(activity, FlowFragment.newInstance())
+        replaceFragment(activity, FlowFragment.newInstance(screen.name))
       }
     }
   }
