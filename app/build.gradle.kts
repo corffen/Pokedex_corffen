@@ -89,6 +89,7 @@ dependencies {
   implementation(libs.material)
   implementation(libs.androidx.fragment)
   implementation(libs.androidx.lifecycle)
+  implementation(libs.androidx.livedata)
   implementation(libs.androidx.startup)
 
   // data binding

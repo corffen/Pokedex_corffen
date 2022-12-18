@@ -20,6 +20,8 @@ import com.skydoves.core.data.repository.DetailRepository
 import com.skydoves.core.data.repository.DetailRepositoryImpl
 import com.skydoves.core.data.repository.MainRepository
 import com.skydoves.core.data.repository.MainRepositoryImpl
+import com.skydoves.core.data.utils.ConnectivityManagerNetworkMonitor
+import com.skydoves.core.data.utils.NetworkMonitor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -38,4 +40,9 @@ interface DataModule {
   fun bindsDetailRepository(
     detailRepositoryImpl: DetailRepositoryImpl
   ): DetailRepository
+
+  @Binds
+  fun bindsNetworkMonitor(
+    networkMonitor: ConnectivityManagerNetworkMonitor
+  ): NetworkMonitor
 }

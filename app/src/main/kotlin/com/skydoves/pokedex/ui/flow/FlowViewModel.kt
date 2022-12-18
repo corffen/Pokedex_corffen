@@ -27,10 +27,6 @@ class FlowViewModel @AssistedInject constructor(
   @Dispatcher(AppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
 ) : BindingViewModel() {
 
-  private val _users = MutableStateFlow<Resource<List<ApiUser>>>(Resource.loading())
-
-  val users: StateFlow<Resource<List<ApiUser>>> = _users
-
   init {
     when (type) {
       Screens.FLOWS_SINGLE_NETWORK.name -> {
@@ -48,7 +44,9 @@ class FlowViewModel @AssistedInject constructor(
     }
   }
 
-
+  private val _users = MutableStateFlow<Resource<List<ApiUser>>>(Resource.loading())
+  val users: StateFlow<Resource<List<ApiUser>>> = _users
+//  val userLiveData = _users.asLiveData()
   private fun fetchUsersWithSingleNetwork() {
     viewModelScope.launch {
       _users.value = Resource.loading()
