@@ -50,12 +50,22 @@
       android:name="androidx.startup.InitializationProvider"
       android:authorities="com.skydoves.pokedex.androidx-startup"
       android:exported="false"
-      tools:node="merge">
+      tools:node="merge"
+      tools:replace="android:authorities">
 
       <meta-data
         android:name="com.skydoves.pokedex.initializer.TimberInitializer"
         android:value="androidx.startup" />
+      <meta-data
+        android:name="com.skydoves.pokedex.initializer.BindingInitializer"
+        android:value="androidx.startup" />
     </provider>
+
+    <provider
+      android:name="com.skydoves.bindables.BindingInitProvider"
+      android:authorities="${applicationId}.bindinginitprovider"
+      tools:node="remove"
+      android:exported="false" />
 
     <profileable
       android:shell="true"

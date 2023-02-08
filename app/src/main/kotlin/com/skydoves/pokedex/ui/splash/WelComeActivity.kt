@@ -1,6 +1,8 @@
 package com.skydoves.pokedex.ui.splash
 
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.skydoves.pokedex.R
 import com.skydoves.pokedex.navigator.AppNavigator
@@ -23,10 +25,25 @@ class WelComeActivity : AppCompatActivity() {
     }
   }
 
+
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    Log.i(TAG, "onSaveInstanceState: ")
+  }
+
+  override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+    super.onRestoreInstanceState(savedInstanceState)
+    Log.i(TAG, "onRestoreInstanceState: ")
+  }
+
   override fun onBackPressed() {
     super.onBackPressed()
     if (supportFragmentManager.backStackEntryCount == 0) {
       finish()
     }
+  }
+
+  companion object{
+    private const val TAG = "WelComeActivity"
   }
 }
