@@ -112,6 +112,16 @@ object ViewBinding {
   }
 
   @JvmStatic
+  @BindingAdapter("visible")
+  fun bindVisible(view: View, shouldBeVisible: Boolean) {
+    view.visibility = if (shouldBeVisible) {
+      View.VISIBLE
+    } else {
+      View.INVISIBLE
+    }
+  }
+
+  @JvmStatic
   @BindingAdapter("onBackPressed")
   fun bindOnBackPressed(view: View, onBackPress: Boolean) {
     val context = view.context

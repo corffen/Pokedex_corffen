@@ -6,6 +6,7 @@ enum class Screens {
   FLOWS_PARALLEL_NETWORK,
   FLOWS_DB,
   FLOWS_CALLBACK,
+  FLOWS_BIND,
   Main
 }
 interface AppNavigator {

@@ -6,6 +6,7 @@ import com.gordon.common.base.utilcode.util.ActivityUtils
 import com.skydoves.pokedex.R
 import com.skydoves.pokedex.ui.flow.ButtonFragment
 import com.skydoves.pokedex.ui.flow.CallbackFragment
+import com.skydoves.pokedex.ui.flow.FlowBindFragment
 import com.skydoves.pokedex.ui.flow.FlowFragment
 import com.skydoves.pokedex.ui.main.MainActivity
 import javax.inject.Inject
@@ -15,6 +16,7 @@ class AppNavigatorImpl @Inject constructor(private val activity: FragmentActivit
     when (screen) {
       Screens.BUTTONS -> replaceFragment(activity, ButtonFragment.newInstance())
       Screens.FLOWS_CALLBACK -> replaceFragment(activity, CallbackFragment.newInstance())
+      Screens.FLOWS_BIND -> replaceFragment(activity, FlowBindFragment.newInstance())
       Screens.Main -> ActivityUtils.startActivity(MainActivity::class.java)
       else -> {
         replaceFragment(activity, FlowFragment.newInstance(screen.name))

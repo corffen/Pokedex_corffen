@@ -18,6 +18,7 @@ package com.skydoves.pokedex.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 import com.skydoves.bindables.BindingListAdapter
 import com.skydoves.pokedex.ui.main.MainViewModel
@@ -38,6 +39,13 @@ object RecyclerViewBinding {
   fun bindSubmitList(view: RecyclerView, itemList: List<Any>?) {
     view.adapter.whatIfNotNullAs<BindingListAdapter<Any, *>> { adapter ->
       adapter.submitList(itemList)
+    }
+  }
+  @JvmStatic
+  @BindingAdapter("setList")
+  fun bindSetList(view: RecyclerView, itemList: List<Any>?) {
+    view.adapter.whatIfNotNullAs<BaseQuickAdapter<Any, *>> { adapter ->
+      adapter.setList(itemList)
     }
   }
 
